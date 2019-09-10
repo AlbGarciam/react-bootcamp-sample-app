@@ -68,11 +68,14 @@ export default class TodosScene extends React.Component {
     }
 
     onDeleteRequested(event, item) {
-        var newTodoList = this.state.todoList;
-        newTodoList.splice(item.position, 1);
-        this.setState({
+        var response = confirm("¿Estás seguro de que quieres borrar la entrada?");
+        if (response == true) {
+            var newTodoList = this.state.todoList;
+            newTodoList.splice(item.position, 1);
+            this.setState({
             todoList: newTodoList
         });
+        }
     }
 
     onEditRequested(_, item) {
