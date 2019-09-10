@@ -50,7 +50,7 @@ export default class TodosScene extends React.Component {
     }
 
     handleNormalInput(data) {
-        if (this.state.todoList.includes(data)) { return; }
+        if (this.state.todoList.filter(item => item.value === data).length > 0) { return; }
 
         var newTodoList = this.state.todoList;
         newTodoList.push(new Todo(this.state.todoList.length, data));

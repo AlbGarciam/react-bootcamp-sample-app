@@ -42,7 +42,7 @@ export default class InputWithButton extends React.Component {
         this.setState({
             inputText: ""
         });
-        this.props.onDataSubmitted(this, this.state.inputText);
+        this.props.onDataSubmitted(this, this.state.inputText.trim());
     }
 
     focusInput() {

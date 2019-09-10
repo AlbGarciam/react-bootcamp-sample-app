@@ -20,5 +20,5 @@ export default class CardTable extends React.Component {
 
 CardTable.propTypes = {
   header: PropTypes.element.isRequired,
-  body: PropTypes.element.isRequired
+  body: PropTypes.array
 };
