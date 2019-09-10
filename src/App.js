@@ -13,9 +13,9 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Switch>
-            <Route exact path="/react-bootcamp/" component={HomeScene} />
-            <Route path="react-bootcamp/sign-in" component={SignInScene} />
-            <Route path="react-bootcamp/todos" component={TodosScene} />
+            <Route exact path="/" component={HomeScene} />
+            <Route path="/sign-in" component={SignInScene} />
+            <Route path="/todos" component={TodosScene} />
             <Route component={SignInScene} />
           </Switch>
         </header>
