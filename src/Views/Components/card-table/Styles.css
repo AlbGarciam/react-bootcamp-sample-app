@@ -1,0 +1,13 @@
+.TableCard {
+    background-color: azure;
+    border-radius: 5pt;
+    padding-top: 20pt;
+    padding-bottom: 20pt;
+    width: 50%;
+    margin:auto;
+    margin-top: 50pt;
+    margin-bottom: 50pt;
+    color: black;
+}
+
+td {padding:15pt 8pt;}

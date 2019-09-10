@@ -1,0 +1,11 @@
+.Login {
+    background-color: azure;
+    border-radius: 5pt;
+    padding: 10pt;
+    width: 50%;
+}
+
+.Login>* {
+    margin: 16pt !important;
+    width: 90%;
+}

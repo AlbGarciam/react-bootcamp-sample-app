@@ -1,0 +1,13 @@
+.Card {
+    background-color: azure;
+    border-radius: 5pt;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+    width: 50%;
+    margin:auto;
+}
+
+.Card>* {
+    margin: 16pt !important;
+    width: 50%;
+}
