@@ -1,11 +1,12 @@
 import React from 'react';
 import { TextField, Fab } from "@material-ui/core";
+import PropTypes from 'prop-types';
 import './Styles.css'
 
 export default class InputWithButton extends React.Component {
 
     constructor(props) {
-        super();
+        super(props);
         console.log(props);
         this.state = {
             inputText: props.initialText || ""
@@ -15,6 +16,7 @@ export default class InputWithButton extends React.Component {
         this.textInput = React.createRef();
     }
 
+    // THIS METHOD IS DEPRECATED!!!
     // componentWillReceiveProps(newProps) {
     //     this.setState({
     //         inputText: newProps.initialText
@@ -22,7 +24,7 @@ export default class InputWithButton extends React.Component {
     // }
 
     componentDidUpdate(prevProps, prevState) {
-        if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+        if (prevProps.initialState !== this.props.initialState) {
             this.setState({
                 inputText: this.props.initialText
             });
@@ -53,7 +55,15 @@ export default class InputWithButton extends React.Component {
             <form className="Card" onSubmit={this.onFormSubmitted}>
                 <TextField required id="text" label={this.props.label} onChange={this.handleChange} value={this.state.inputText} inputRef={this.textInput}/>
                 <Fab type="submit" variant="extended">{this.props.buttonText}</Fab>
+                {this.props.children}
             </form>
         );
     };
 }
+
+InputWithButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  onDataSubmitted: PropTypes.func.isRequired,
+  initialState: PropTypes.string
+};

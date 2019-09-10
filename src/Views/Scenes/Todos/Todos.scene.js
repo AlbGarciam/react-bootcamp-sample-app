@@ -21,6 +21,7 @@ export default class TodosScene extends React.Component {
         this.onInputSubmitted = this.onInputSubmitted.bind(this);
         this.onDisconnect = this.onDisconnect.bind(this);
         this.inputWithButton = React.createRef();
+        this.onCancelRequested = this.onCancelRequested.bind(this);
     }
 
     componentDidMount() {
@@ -84,6 +85,13 @@ export default class TodosScene extends React.Component {
         this.inputWithButton.current.focusInput();
     }
 
+    onCancelRequested(event) {
+      this.setState({
+            isReplacing: false,
+            editingPosition: null
+      });
+    }
+
     headerHTML() {
         return <tr><th>Tarea</th><th>Acciones</th></tr>
     }
@@ -107,8 +115,9 @@ export default class TodosScene extends React.Component {
                 <InputWithButton label="Tarea" onDataSubmitted={this.onInputSubmitted}  
                                  initialText={ this.state.isReplacing ? this.state.lastIncludedText : "" } 
                                  ref={this.inputWithButton}
-                                 buttonText={this.state.isReplacing ? "Guardar" : "Añadir"}
-                                />
+                                 buttonText={this.state.isReplacing ? "Guardar" : "Añadir"}>
+                  { this.state.isReplacing && <Fab variant="extended" onClick={this.onCancelRequested}>Cancelar</Fab>}
+                </InputWithButton>
                 <CardTable header={this.headerHTML()} body={rows}/>
                 <Fab variant="extended" onClick={this.onDisconnect}>Desconectar</Fab>
             </div>

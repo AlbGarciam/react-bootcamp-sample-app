@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Fab } from "@material-ui/core";
-import {SessionStorageKeys, saveCurrentUser} from "../../../Storage/SessionStorage.constants";
+import {saveCurrentUser} from "../../../Storage/SessionStorage.constants";
 
 import './SignIn.css'
 
