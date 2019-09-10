@@ -24,7 +24,7 @@ export default class InputWithButton extends React.Component {
     // }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.initialState !== this.props.initialState) {
+        if (prevProps.initialText !== this.props.initialText) {
             this.setState({
                 inputText: this.props.initialText
             });
