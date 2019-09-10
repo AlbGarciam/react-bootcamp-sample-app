@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Fab } from "@material-ui/core";
-import {saveCurrentUser} from "../../../Storage/SessionStorage.constants";
+import {saveCurrentUser, getCurrentUser} from "../../../Storage/SessionStorage.constants";
 
 import './SignIn.css'
 
@@ -20,6 +20,12 @@ export default class SignInScene extends React.Component {
         this.setState({
             [event.target.id]: event.target.value
         });
+    }
+
+    componentDidMount() {
+        if (getCurrentUser()) {
+            this.props.history.push('/todos');
+        }
     }
 
     onFormSubmitted(event) {
