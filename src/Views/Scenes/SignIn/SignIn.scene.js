@@ -1,6 +1,8 @@
 import React from "react";
 import { TextField, Fab } from "@material-ui/core";
 import {saveCurrentUser, getCurrentUser} from "../../../Storage/SessionStorage.constants";
+import store from '../../../redux/store/store';
+import {saveUser} from '../../../redux/actions/userActions';
 
 import './SignIn.css'
 
@@ -39,7 +41,6 @@ export default class SignInScene extends React.Component {
     }
 
     validateSignInInput(name, surname, age) {
-        console.log(`${name} ${surname} ${age}`);
         if (!(name && surname && age )) { return false; }
         return name.length > 5 && surname.length > 5 && age > 18;
     };

@@ -7,7 +7,6 @@ export default class InputWithButton extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             inputText: props.initialText || ""
         };
@@ -46,7 +45,6 @@ export default class InputWithButton extends React.Component {
     }
 
     focusInput() {
-        console.log("Focus called");
         this.textInput.current.focus();
     }
 

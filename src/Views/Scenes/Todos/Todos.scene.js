@@ -3,6 +3,7 @@ import { getCurrentUser, getTodoItems, saveTodoItems, clearSession } from '../..
 import InputWithButton from '../../Components/input-with-button/InputWithButton.component';
 import CardTable from '../../Components/card-table/CardTable.component';
 import { Fab } from '@material-ui/core';
+import store from '../../../redux/store/store';
 
 import './Styles.css';
 import Todo from './Todo.model';
@@ -22,10 +23,16 @@ export default class TodosScene extends React.Component {
         this.onDisconnect = this.onDisconnect.bind(this);
         this.inputWithButton = React.createRef();
         this.onCancelRequested = this.onCancelRequested.bind(this);
+        this.unsubscribe = store.subscribe(() => {
+            this.setState({
+              currentUser: getCurrentUser(),
+              todoList: getTodoItems()
+            });
+        });
     }
 
     componentDidMount() {
-        if (!this.state.currentUser) {
+        if (!getCurrentUser()) {
             this.props.history.replace('/sign-in');
         }
     }
@@ -36,12 +43,11 @@ export default class TodosScene extends React.Component {
     }
 
     handleReplace(data){
-        var newTodoList = this.state.todoList;
+        var newTodoList = getTodoItems();
         var position = this.state.editingPosition;
-        newTodoList[position].value = data
+        newTodoList[position].value = data;
 
         this.setState({
-            todoList: newTodoList,
             isReplacing: false,
             editingPosition: null
         });
@@ -52,12 +58,8 @@ export default class TodosScene extends React.Component {
     handleNormalInput(data) {
         if (this.state.todoList.filter(item => item.value === data).length > 0) { return; }
 
-        var newTodoList = this.state.todoList;
-        newTodoList.push(new Todo(this.state.todoList.length, data));
-
-        this.setState({
-            todoList: newTodoList
-        });
+        var newTodoList = getTodoItems() || [];
+        newTodoList.push(new Todo(newTodoList.length, data));
 
         saveTodoItems(newTodoList);
     }
@@ -69,17 +71,18 @@ export default class TodosScene extends React.Component {
 
     onDeleteRequested(event, item) {
         var response = confirm("¿Estás seguro de que quieres borrar la entrada?");
+        let position = (getTodoItems() || []).indexOf(item);
+        if (position === null) { return ; }
         if (response == true) {
             var newTodoList = this.state.todoList;
-            newTodoList.splice(item.position, 1);
-            this.setState({
-            todoList: newTodoList
-        });
+            newTodoList.splice(position, 1);
+            saveTodoItems(newTodoList);
         }
     }
 
     onEditRequested(_, item) {
-        console.log("OnEditRequested");
+      let position = (getTodoItems() || []).indexOf(item);
+      if (position === null) { return ; }
         this.setState({
             isReplacing: true,
             editingPosition: item.position,
@@ -106,12 +109,12 @@ export default class TodosScene extends React.Component {
     }
 
     render() {
+        console.log(this.state);
         const rows = this.rowsForTodo(this.state.todoList);
         var Username = "";
         if (this.state.currentUser) {
             Username = this.state.currentUser.name
         }
-        console.log("Rendering");
         return (
             <div className="Container">
                 <p>Hola {Username}</p>

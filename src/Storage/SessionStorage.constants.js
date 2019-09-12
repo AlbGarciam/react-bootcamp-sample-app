@@ -1,3 +1,5 @@
+import store from '../redux/store/store';
+import {saveUser, clear, saveTodos} from '../redux/actions/userActions';
 
 export let SessionStorageKeys = {
     SIGNED_USER: 'SIGNED_USER',
@@ -5,21 +7,27 @@ export let SessionStorageKeys = {
 }
 
 export function getCurrentUser() {
-    return JSON.parse(sessionStorage.getItem(SessionStorageKeys.SIGNED_USER));
+  return store.getState().user;
+  //  return JSON.parse(sessionStorage.getItem(SessionStorageKeys.SIGNED_USER));
 }
 
 export function saveCurrentUser(user) {
-    sessionStorage.setItem(SessionStorageKeys.SIGNED_USER, JSON.stringify(user));
+  store.dispatch(saveUser(user));
+  //  sessionStorage.setItem(SessionStorageKeys.SIGNED_USER, JSON.stringify(user));
 }
 
 export function getTodoItems() {
-    return JSON.parse(sessionStorage.getItem(SessionStorageKeys.TODO_ITEMS));
+  return store.getState().todos || [];
+  //  return JSON.parse(sessionStorage.getItem(SessionStorageKeys.TODO_ITEMS));
 }
 
 export function saveTodoItems(items) {
-    sessionStorage.setItem(SessionStorageKeys.TODO_ITEMS, JSON.stringify(items));
+  store.dispatch(saveTodos(items));
+  //  sessionStorage.setItem(SessionStorageKeys.TODO_ITEMS, JSON.stringify(items));
 }
 
 export function clearSession() {
-    sessionStorage.clear()
+  store.dispatch(clear);
+  //  sessionStorage.clear()
 }
+
