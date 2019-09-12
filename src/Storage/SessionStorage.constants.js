@@ -1,33 +1,48 @@
 import store from '../redux/store/store';
 import {saveUser, clear, saveTodos} from '../redux/actions/userActions';
-
-export let SessionStorageKeys = {
-    SIGNED_USER: 'SIGNED_USER',
-    TODO_ITEMS: 'TODO_ITEMS'
-}
+import Todo from '../Views/Scenes/Todos/Todo.model';
 
 export function getCurrentUser() {
   return store.getState().user;
-  //  return JSON.parse(sessionStorage.getItem(SessionStorageKeys.SIGNED_USER));
 }
 
 export function saveCurrentUser(user) {
   store.dispatch(saveUser(user));
-  //  sessionStorage.setItem(SessionStorageKeys.SIGNED_USER, JSON.stringify(user));
 }
 
 export function getTodoItems() {
   return store.getState().todos || [];
-  //  return JSON.parse(sessionStorage.getItem(SessionStorageKeys.TODO_ITEMS));
-}
-
-export function saveTodoItems(items) {
-  store.dispatch(saveTodos(items));
-  //  sessionStorage.setItem(SessionStorageKeys.TODO_ITEMS, JSON.stringify(items));
 }
 
 export function clearSession() {
   store.dispatch(clear);
-  //  sessionStorage.clear()
 }
+
+export function insertTodo(data) {
+  var items = getTodoItems()
+  if (items.filter(item => item.value === data).length > 0) { return; }
+  items.push(new Todo(new Date(), data));
+  saveTodoItems(items);
+}
+
+export function editTodoAtPosition(position, data) {
+  var newTodoList = getTodoItems();
+  newTodoList[position].value = data;
+  saveTodoItems(newTodoList)
+}
+
+export function deleteTodo(item) {
+  var newTodoItems = getTodoItems() || [];
+  let position = newTodoItems.indexOf(item);
+  if (position === null) { return ; }
+  newTodoItems.splice(position, 1);
+  saveTodoItems(newTodoItems);
+}
+
+// MARK: - Private methods
+
+function saveTodoItems(items) {
+  store.dispatch(saveTodos(items));
+}
+
 
