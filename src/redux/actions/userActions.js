@@ -1,6 +1,6 @@
-export const clear = {
+export const clear = () => ({
   type: "CLEAR"
-};
+});
 
 export const saveUser = user => ({
   type: "SAVE_USER",
